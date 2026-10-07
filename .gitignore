@@ -1,0 +1,31 @@
+# Ansys Fluent / Workbench: keep scripts, journals and result CSVs, not solver files
+*.cas
+*.cas.h5
+*.cas.gz
+*.dat
+*.dat.h5
+*.dat.gz
+*.msh
+*.msh.h5
+*.trn
+*.bak
+*.wbpj
+*_files/
+cleanup-fluent-*
+fluent-*.log
+
+# CAD working files (commit STEP and drawings instead)
+*.bak
+*.lck
+~$*
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
