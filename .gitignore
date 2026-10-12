@@ -29,3 +29,11 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# Ansys Mechanical / Workbench archives
+*.mechdb
+*.wbpz
+
+# Private notes: contacts and outreach stay out of the public repo
+outreach*.md
+private/
