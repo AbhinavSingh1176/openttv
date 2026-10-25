@@ -2,7 +2,7 @@
 
 **An open-hardware thermal test vehicle for liquid cold plates, following the Open Compute Project's single-phase cold plate test method.**
 
-> **Next action:** Phase 1. Read the OCP test spec and list what it leaves open. Pull Hoang et al. 2022 into `01_requirements/hoang_reference.md`. Email the Binghamton authors. Send three print vendors the 0.5 mm pin test coupon.
+> **Next action:** Hoang fact hunt and the Binghamton email (overdue), then the test-vehicle hand-calc notebook. Pin test coupon is done and three vendor quotes are in [`vendor_answers.md`](01_requirements/vendor_answers.md); waiting on PCBWay's engineer review of the 0.5 mm pins.
 
 ## What this is
 
@@ -21,12 +21,12 @@ OpenTTV is a documented, low-cost test vehicle and rig that anyone can build:
 
 | Phase | What | Window | Status |
 |---|---|---|---|
-| 1 | Learn and lock: read, ask the authors and vendors, lock the numbers | Oct 12 to Oct 25, 2026 | In progress |
-| 2 | Design the test vehicle: hand calculations, CAD, Ansys check, order the copper | Oct 19 to Nov 8 | Not started |
-| 3 | Simulate the reference plate in Fluent and order it | Oct 26 to Nov 15 | Not started |
-| 4 | Build and calibrate the rig | Nov 9 to Dec 13 | Not started |
-| 5 | Validate against Hoang et al. and run the sensitivity study | Dec 14 to Jan 3, 2027 | Not started |
-| 6 | Test my own plate blind, then release | Jan 4 to Mar 28, 2027 | Not started |
+| 1 | Learn and lock: read, ask the authors and vendors, lock the numbers | Oct 12 to Nov 1, 2026 | In progress: pin test coupon CAD done, vendor quotes in |
+| 2 | Design the test vehicle: hand calculations, CAD, Ansys check, order the copper | Oct 19 to Nov 15 | Not started |
+| 3 | Simulate the reference plate in Fluent and order it | Nov 2 to Nov 22 | Not started |
+| 4 | Build and calibrate the rig | Nov 16 to Dec 20 | Not started |
+| 5 | Validate against Hoang et al. and run the sensitivity study | Dec 21 to Jan 10, 2027 | Not started |
+| 6 | Test my own plate blind, then release | Jan 11 to Mar 28, 2027 | Not started |
 
 Phases overlap on purpose: reading continues while the test vehicle is designed, and simulation runs while parts ship.
 

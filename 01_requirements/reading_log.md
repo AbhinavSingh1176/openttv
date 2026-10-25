@@ -7,6 +7,12 @@ How to read a paper: abstract and conclusion first, then every figure and table,
 ## 1. OCP Single-Phase Direct-to-Chip Cold Plate Test Specification v1.0.0
 
 **What it defines:**
+ It provides common test terminology, standardized test methods and 
+conditions, and defined acceptance criteria to enable comparable results, consistent 
+qualification, and simplified procurement.
+The vision is a liquid cooling ecosystem in which cold plate verification is shared infrastructure 
+rather than a per-supplier negotiation, so that procurement and integration decisions rest on 
+comparable evidence. 
 
 -
 
