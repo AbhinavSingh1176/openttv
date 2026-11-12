@@ -11,7 +11,7 @@
 | Vendor | Process | AlSi10Mg? | Part | Shipping | Total | Timing | Status |
 |---|---|---|---|---|---|---|---|
 | JLC3DP | SLM | **No**: 316L and Ti TC4 only | n/a | n/a | n/a | n/a | Ruled out for the reference plate |
-| PCBWay | SLM | Yes | $24.89 (pre-quote) | $26.55 (DHL, 2–4 days) | **$51.44** | 3–4 business days to build; est. ship Oct 28, deliver Oct 31 | Engineer review pending |
+| PCBWay | SLM | Yes | $24.89 (pre-quote) | $26.55 (DHL, 2–4 days) | **$51.44** | 3–4 business days to build after ordering | Answered Nov 11: a 0.5 mm pin comes out 0.3–0.7 mm (normal tolerance), 0.5 mm is their minimum pin, Ra 6.3–7 µm. Full-plate price not quoted yet |
 | Xometry | DMLS | Yes ("Aluminum AlSiMg") | $106.48 (list $140.28) | Check whether included | $106.48+ | Arrives Mon Nov 16 | Automated check passed; human not yet asked |
 
 Prices are instant quotes for one coupon. The full plate (625 pins) may be repriced on review.
@@ -29,7 +29,14 @@ Prices are instant quotes for one coupon. The full plate (625 pins) may be repri
 - The price is a system pre-quote; the official quote comes after an engineer reviews the part.
 - "Wall thickness risk taken" is ticked by default, meaning print as-is at the customer's risk. Untick it so their engineer emails about thin features instead.
 - Their CNC service lists copper, so the copper test vehicle can be quoted here in Phase 2.
-- Future Innovators student program (announced Sept 2026): 50% off 3D printing and CNC, up to $200 per approved project. Apply with the copper block and reference plate as one project by Nov 8.
+- **Oct 25, reply from PCBWay support (order message thread):** "Regarding your order note, the tolerance for the 0.5 mm feature is approximately ±0.2 mm."
+- **Nov 11, follow-up answers from PCBWay support:**
+  - Tolerance: "The normal printing tolerance is within 0.3–0.7 mm. Actual results might be better than this."
+  - Survival: printed flat on the build plate, powder removal is fine; laser lines stay on the surface. "The minimum printable pin diameter is 0.5 mm."
+  - Roughness: typical as-printed Ra 6.3–7 µm.
+  - Full plate: "We recommend a pin spacing of 0.5 mm, and pin diameter of 0.5 mm or larger." Read as a 0.5 mm gap, which matches the 1.0 mm pitch design. No price yet; upload the full-plate CAD for an instant quote.
+  - Future Innovators: apply at https://www.pcbway.com/project/sponsor/future-innovators-program.html and a PCBWay colleague follows up.
+- Future Innovators student program (announced Sept 2026): 50% off 3D printing and CNC, up to $200 per approved project. Apply with the copper block and reference plate as one project.
 
 ### Xometry (Oct 25)
 - Metal 3D Printing → Direct Metal Laser Sintering (DMLS) → Aluminum AlSiMg, Standard finish, Standard inspection.
@@ -46,11 +53,13 @@ Prices are instant quotes for one coupon. The full plate (625 pins) may be repri
 
 | Vendor | Asked on | Answer | Answered on |
 |---|---|---|---|
-| PCBWay | | | |
+| PCBWay | Oct 24 (order note); follow-up Nov 11 | Q1: yes, if printed flat on the build plate. Q2: 0.5 mm minimum. Q3: normal tolerance 0.3–0.7 mm on a 0.5 mm pin, often better. Q4: Ra 6.3–7 µm. Q5: no price yet; 0.5 mm spacing and pins of 0.5 mm or larger recommended | Oct 25; Nov 11 |
 | Xometry | | | |
 
 ## What this means so far
 
 - Only PCBWay and Xometry can print AlSi10Mg. PCBWay is cheaper and faster.
-- Nobody has confirmed the 0.5 mm pins yet. The main risk is tolerance: ±0.3 mm-class tolerance on a 0.5 mm pin is more than half its diameter.
+- PCBWay's ±0.2 mm on a 0.5 mm pin allows anything from 0.3 to 0.7 mm. That spans Hoang's whole 0.3 to 0.5 mm study, where R at 2 L/min changes by about a third (0.100 to 0.067 K/W). So the printed pins must be measured, and both the CFD and the Hoang comparison must use the measured diameters, not the nominal 0.5 mm.
+- PCBWay says 0.5 mm pins survive printing and powder removal when printed flat, but 0.5 mm is their minimum. Only Hoang's 0.5 mm plate can be printed there, and my own plate must keep pins at 0.5 mm or larger with gaps of at least 0.5 mm.
+- As-printed Ra of 6.3–7 µm is about 1.3% of the 0.5 mm gap between pins. Expect more pressure drop than a smooth-wall CFD model predicts; Kirsch and Thole (2017) found higher pressure loss in printed pin-fin arrays than in conventionally made ones.
 - If neither vendor will commit to the pins, Plan B in order: (1) a spare plate from the Binghamton authors, (2) a higher-end vendor, (3) a coarser published reference plate.
