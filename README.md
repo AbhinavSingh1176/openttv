@@ -2,7 +2,7 @@
 
 **An open-hardware thermal test vehicle for liquid cold plates, following the Open Compute Project's single-phase cold plate test method.**
 
-> **Next action:** Hoang fact hunt and the Binghamton email (overdue), then the test-vehicle hand-calc notebook. Pin test coupon is done and three vendor quotes are in [`vendor_answers.md`](01_requirements/vendor_answers.md); waiting on PCBWay's engineer review of the 0.5 mm pins.
+> **Next action:** version 0 CAD of the copper test vehicle, then the hand calculations and the Ansys check, so the copper block and the reference plates can be ordered together by Dec 6. Waiting on the Binghamton authors (emailed Nov 11) and on PCBWay's review of the full reference plate; see [`hoang_reference.md`](01_requirements/hoang_reference.md) and [`vendor_answers.md`](01_requirements/vendor_answers.md).
 
 ## What this is
 
@@ -13,7 +13,7 @@ OpenTTV is a documented, low-cost test vehicle and rig that anyone can build:
 1. **Build** a copper thermal test vehicle (TTV) with a 25.4 × 25.4 mm face, up to 250 W, that measures its own heat flow and surface temperature.
 2. **Validate** it by reproducing a published 3D-printed pin-fin cold plate (Hoang et al., 2022).
 3. **Measure** how much the unreported choices move the result: clamp pressure, paste, and the surface-temperature method.
-4. **Demonstrate** it on a graded pin-fin plate of my own design, with the CFD prediction committed before the test.
+4. **Demonstrate** it on a graded pin-fin plate of my own design, with the CFD prediction committed before the test (v1.1, after the first release).
 
 **Start here:** [Project brief](01_requirements/project_brief.md) (problem, goal, scope) and [Requirements](01_requirements/requirements.md) (test conditions and pass criteria).
 
@@ -21,12 +21,13 @@ OpenTTV is a documented, low-cost test vehicle and rig that anyone can build:
 
 | Phase | What | Window | Status |
 |---|---|---|---|
-| 1 | Learn and lock: read, ask the authors and vendors, lock the numbers | Oct 12 to Nov 1, 2026 | In progress: pin test coupon CAD done, vendor quotes in |
-| 2 | Design the test vehicle: hand calculations, CAD, Ansys check, order the copper | Oct 19 to Nov 15 | Not started |
-| 3 | Simulate the reference plate in Fluent and order it | Nov 2 to Nov 22 | Not started |
-| 4 | Build and calibrate the rig | Nov 16 to Dec 20 | Not started |
-| 5 | Validate against Hoang et al. and run the sensitivity study | Dec 21 to Jan 10, 2027 | Not started |
-| 6 | Test my own plate blind, then release | Jan 11 to Mar 28, 2027 | Not started |
+| 1 | Learn and lock: read, ask the authors and vendors, lock the numbers | Oct 12 to Dec 6, 2026 | In progress: reference data extracted, authors emailed, print vendor chosen |
+| 2 | Design the test vehicle: hand calculations, CAD, Ansys check, order the copper and the plates | Oct 19 to Dec 13 | In progress: reference plate modeled and quoted |
+| 3 | Simulate the reference plate in Fluent and design the manifold | Dec 7 to Jan 17, 2027 | Not started |
+| 4 | Build and calibrate the rig | Dec 14 to Jan 31 | Not started |
+| 5 | Validate against Hoang et al. and run the sensitivity study | Feb 1 to Feb 28 | Not started |
+| 6 | Release v1.0: build guide, test procedure, report | Mar 1 to Mar 28 | Not started |
+| 7 | Test my own plate blind (v1.1) | Mar 29 to May 16 | Not started |
 
 Phases overlap on purpose: reading continues while the test vehicle is designed, and simulation runs while parts ship.
 
@@ -38,13 +39,13 @@ Phases overlap on purpose: reading continues while the test vehicle is designed,
 | Test vehicle face | 25.4 × 25.4 mm copper (C101 or C110), flat to 0.05 mm |
 | Heat load | Up to 250 W; resistance tests at 150 W |
 | Heat flow and surface temperature | Four thermocouples in the copper neck, 6.35 mm apart; Fourier's law and linear extrapolation |
-| Coolant | Water with inhibitor; 45 ± 2 °C inlet for OCP runs, Hoang's inlet temperatures for validation |
+| Coolant | Water with inhibitor; 45 ± 2 °C inlet for OCP runs, 36 °C for the comparison with Hoang's Fig. 10 |
 | Flows | Thermal: 0.75, 1.0, 1.5, 2.0 L/min. Pressure drop: six flows from 0.375 to 2.25 L/min (25 to 150% of a 1.5 L/min rated flow) |
 | Clamp | Adjustable, about 15 to 50 psi on the face |
-| Reference plate | Hoang et al. 2022: AlSi10Mg, 0.5 mm pins 2 mm tall, impingement manifold |
+| Reference plate | Hoang et al. 2022: AlSi10Mg, 625 pins of 0.5 mm, 2 mm tall, slit-jet impingement manifold. Two sensors under the plate base, so R can also be reported their way (base to inlet) |
 | Targets | R uncertainty ±10% or better at 150 W; three remounts within 5% |
-| Budget | $800 to $1,600 at list prices; lean target about $400 to $600 (shared loop, borrowed or discounted plates, thermistor neck sensors) |
-| CFD license | _fill in: Ansys Student (about 1M fluid cells, 128k structural nodes) or Purdue license_ |
+| Budget | $800 to $1,350 at list prices; lean target about $400 to $600 (student discount on machining and printing, thermistor neck sensors, used loop parts) |
+| CFD license | Open. Ansys Student (about 1M fluid cells, 128k structural nodes) for development; Purdue's teaching license does not cover published results, so Phase 3 chooses between a research license and a coarser mesh with its error measured |
 
 ## Repository layout
 
@@ -52,13 +53,13 @@ Phases overlap on purpose: reading continues while the test vehicle is designed,
 |---|---|---|
 | `01_requirements` | Brief, requirements, reading log, reference-plate data, vendor answers | 1 |
 | `02_ttv` | Test vehicle: hand calculations, CAD, drawings, Ansys check | 2 |
-| `03_cfd` | Fluent model of the reference plate: scripts, journals, mesh study, comparison | 3 |
+| `03_cfd` | Reference plate CAD (`reference_plate/`) and its Fluent model: scripts, journals, mesh study, comparison | 2, 3 |
 | `04_rig` | Flow loop, wiring diagram, clamp, parts list (`bom.csv`) | 4 |
 | `05_firmware` | Microcontroller firmware and the Python logger | 4 |
 | `06_calibration` | Calibration data and the uncertainty budget | 4 |
-| `07_data` | Raw test data, one folder per test day, and predictions committed before tests | 5, 6 |
-| `08_analysis` | Notebooks that turn raw data into results and plots | 5, 6 |
-| `09_design` | My own plate: geometry script, design sweep, surrogate model | 6 |
+| `07_data` | Raw test data, one folder per test day, and predictions committed before tests | 5, 7 |
+| `08_analysis` | Notebooks that turn raw data into results and plots | 5, 7 |
+| `09_design` | My own plate: geometry script, design sweep, surrogate model | 7 |
 | `10_docs` | Build guide and test procedure | 6 |
 | `11_report` | Report, poster and figures | 6 |
 

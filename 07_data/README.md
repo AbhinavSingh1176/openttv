@@ -1,4 +1,4 @@
-# Raw test data (Phases 5 and 6)
+# Raw test data (Phases 5 and 7)
 
 One folder per test day, named `YYYY-MM-DD_short-description`, holding the raw logger CSVs untouched and a `notes.md` with plate, paste mass, clamp setting and anything unusual.
 

@@ -20,20 +20,20 @@ Design, build and validate an open-hardware test vehicle and procedure that foll
 
 | # | Question | How it gets answered |
 |---|---|---|
-| RQ1 | Can a low-cost open TTV reproduce a published cold plate result? | Test a copy of Hoang et al.'s 0.5 mm pin-fin plate at their flows (0.75 to 2 L/min) and compare with their measured R and pressure drop |
+| RQ1 | Can a low-cost open TTV reproduce a published cold plate result? | Test a copy of Hoang et al.'s 0.5 mm pin-fin plate at their flows (0.75 to 2 L/min) and compare with their measured R and pressure drop, using their definition of R (plate base to inlet) |
 | RQ2 | Which unreported choices move the result most on a low-cost rig? | Vary clamp pressure, paste and the surface-temperature method one at a time, three repeats each |
 | RQ3 | How well does CFD predict a plate printed by a commercial vendor? | Commit a CFD prediction to GitHub, then test a graded pin-fin plate of my own design |
 
 ## The reference plate
 
-Hoang et al. (Binghamton University and IBM, IEEE CPMT 2022) designed and tested 3D-printed impingement pin-fin cold plates in AlSi10Mg aluminum, with pins 0.3 to 0.5 mm in diameter and 2 mm tall over a 25.4 × 25.4 mm area. They measured R of 0.064 to 0.106 °C/W and pressure drops of 21 to 28 kPa at 2 L/min across their designs, and their CFD agreed with measurement to within about 5%. The paper gives the geometry and results at several flows, the plate can be printed by commercial services, and its finned area sets the size of the OpenTTV face. Details the paper does not give are listed in [`requirements.md`](requirements.md#open-items) and asked of the authors.
+Hoang et al. (Binghamton University and IBM, IEEE CPMT 2022) designed and tested 3D-printed impingement pin-fin cold plates in AlSi10Mg aluminum, with pins 0.3 to 0.5 mm in diameter and 2 mm tall over a 25.4 × 25.4 mm area. They measured R of 0.064 to 0.106 °C/W and pressure drops of 21 to 28 kPa at 2 L/min across their designs, and their CFD agreed with measurement to within about 5%. The paper gives the geometry and results at six flows, the 0.5 mm design can be printed by a commercial service, and its finned area sets the size of the OpenTTV face. Their R is measured from thermocouples under the plate base, so it leaves out the thermal paste; OpenTTV reports that form for the comparison and the OCP form for everything else. Every number taken from the paper is in [`hoang_reference.md`](hoang_reference.md). Details the paper does not give are listed in [`requirements.md`](requirements.md#open-items) and asked of the authors.
 
 ## Scope
 
 | In | Out |
 |---|---|
 | One heat source, 25.4 × 25.4 mm, up to 250 W | Multi-chip or hot-spot heat maps |
-| Single-phase water at 45 °C inlet (and Hoang's inlet temperatures for validation) | Two-phase or immersion cooling |
+| Single-phase water at 45 °C inlet (and 36 °C for the comparison with Hoang) | Two-phase or immersion cooling |
 | OCP thermal resistance and pressure-drop tests | OCP reliability tests: burst, thermal cycling, salt spray, shock |
 | One reference plate and one plate of my own design | A product or a commercial test service |
 
@@ -54,7 +54,7 @@ Hoang et al. (Binghamton University and IBM, IEEE CPMT 2022) designed and tested
 - Firmware, logger and analysis code
 - An uncertainty budget and a sensitivity study
 - Validation data against Hoang et al. 2022
-- One plate of my own design, with a blind CFD prediction and test results
+- One plate of my own design, with a blind CFD prediction and test results (v1.1, after the first release)
 - A four-page report, a poster, and this public repo with a citable release
 
 ## How I will know it worked
@@ -70,10 +70,10 @@ If the rig does not agree with Hoang, a careful measurement of why is still a us
 
 | Risk | Fallback |
 |---|---|
-| No vendor can reliably print 0.5 mm pins | Ask the Binghamton authors for a plate; use a higher-end vendor; choose a coarser published reference |
+| The printed pins come out off-size (PCBWay's tolerance puts a 0.5 mm pin between 0.3 and 0.7 mm) | Measure the pins, rerun the CFD on the measured size, and print two copies; ask the Binghamton authors for a spare plate |
 | The CFD mesh does not fit the license cell limit | Purdue research license; coarse mesh with measured error (grid convergence index); porous-media model |
 | The rig disagrees with Hoang | The cause becomes a finding: clamp, paste, surface-temperature method or flow bypass |
-| Time runs short | The own-design plate moves later; a validated rig is already a complete project |
+| Time runs short | Already applied once: the own-design plate follows the Mar 28 release as v1.1. A validated rig is a complete project |
 
 ## What I will learn
 

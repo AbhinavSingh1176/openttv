@@ -76,19 +76,21 @@ My check on the Reynolds number: if the jet were the 6.35 mm tube, Re at 2 L/min
 - Junction temperature at 350 W and 25 °C inlet: 0.5 mm plate 91.9 °C at 0.75 L/min and 75.6 °C at 2 L/min; 0.3 mm plate 63.2 °C at 2 L/min (p.16, Fig. 16).
 - Fig. 7 (p.10): 0.3 mm plate, experiment against model, with error bars.
 - Material study (numerical, Fig. 15, p.15–16): aluminum 0.068, copper 0.038, silver 0.037 K/W at 2 L/min.
+- Groove positions assumed (A to center, B to 6.35 mm from center) until the authors reply.
 
 ## 4. What this means for OpenTTV
 
-1. **Their R excludes the paste.** It runs from the base thermocouples to the inlet and uses electrical power. OpenTTV's R runs from the extrapolated test-vehicle face and includes the paste. To compare like with like, print the reference plate with the same two 0.76 mm grooves and put thermocouples in them, then report both definitions. The groove thermocouple is now needed for validation, not a stretch goal.
+1. **Their R excludes the paste.** It runs from the base thermocouples to the inlet and uses electrical power. OpenTTV's R runs from the extrapolated test-vehicle face and includes the paste. To compare like with like, print the reference plate with the same two 0.76 mm grooves and put thermocouples in them, then report both definitions. The groove thermocouple is now needed for validation, not a stretch goal. The junction sits a few tenths of a millimetre above the plate underside, so face temperature minus base temperature covers the paste plus that thin layer of aluminum (about 0.004 to 0.008 K/W for 0.4 to 0.76 mm).
 2. **Use electrical power for the Hoang comparison** and neck heat flow for OpenTTV's own numbers, and report the difference as heat loss.
 3. **Validation conditions:** 36 °C inlet, six flows from 0.75 to 2.0 L/min.
-4. **The inlet is a slit**, not a 6.35 mm round jet. The manifold CAD and the CFD setup in the playbook need updating.
+4. **The inlet is a slit**, not a 6.35 mm round jet. The tracker and the playbook were updated for this on Nov 12.
 5. **Their test vehicle is the same idea as OpenTTV's:** a heated copper block tapering to a 1 in face, with three neck thermocouples and Fourier extrapolation. Their positions and insulation are not given, which is the gap OpenTTV documents.
 6. **They printed in-house.** A commercially printed copy is new data, not a repeat.
+7. **The printed pin size is uncertain.** PCBWay's normal tolerance puts a 0.5 mm pin anywhere from 0.3 to 0.7 mm, which spans all three of Hoang's designs. Measure the pins and compare against the curve that matches ([`vendor_answers.md`](vendor_answers.md)). The paper does not report as-printed pin sizes or surface roughness.
 
 ## 5. Open questions for the authors
 
-Pick the three sharpest for the email.
+Questions 1, 2, 3 and 7 went to S. Schiffres and B. Sammakia on Nov 11, 2026, with one more: whether they measured the as-printed pin diameters. Follow up on Nov 24. The rest wait for a reply or a call.
 
 1. Does "fin pitch equal to diameter" mean the gap equals the diameter (1.0 mm center to center for the 0.5 mm plate)? How many pins per row?
 2. What are the inlet slit dimensions? Is the manifold CAD available?

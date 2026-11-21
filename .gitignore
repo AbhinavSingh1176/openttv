@@ -40,6 +40,3 @@ private/
 
 # Paper PDFs are copyrighted: keep local copies, link them from the brief instead
 12_references/*.pdf
-
-# SolidWorks lock files
-~$*

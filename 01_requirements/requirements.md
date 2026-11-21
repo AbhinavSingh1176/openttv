@@ -2,7 +2,7 @@
 
 **Mission:** an open, low-cost thermal test vehicle (TTV) and rig that implements the OCP single-phase cold plate test method, validated by reproducing Hoang et al. (2022). Background is in [`project_brief.md`](project_brief.md).
 
-Status: draft for Phase 1. Every number below needs a source or a reason; change anything that cannot be defended.
+Status: draft, updated Nov 12, 2026 for the Hoang reference data and the vendor answers; still to be locked in Phase 1. Every number below needs a source or a reason; change anything that cannot be defended.
 
 ## Definitions
 
@@ -10,6 +10,10 @@ Status: draft for Phase 1. Every number below needs a source or a reason; change
   - **T_face** is the TTV face temperature, extrapolated from the four neck thermocouples with a straight-line fit. R therefore includes the paste layer.
   - **T_in** is the water temperature at the plate inlet.
   - **P** is the heat flow through the neck from Fourier's law, P = k · A · dT/dx, cross-checked against electrical power and the water's heat pickup.
+- **Thermal resistance, Hoang's form**, used only for the validation comparison: R_base = (T_base − T_in) / P_el.
+  - **T_base** is the plate base temperature from two sensors in grooves under the base. This R leaves out the paste layer.
+  - **P_el** is the electrical heater power, as in the paper.
+- **Interface resistance** = (T_face − T_base) / P: the paste layer plus the thin layer of aluminum between the groove and the plate underside (about 0.004 to 0.008 °C/W, subtracted by calculation). Read on every run.
 - **Area-normalized resistance** R·A (°C·cm²/W), for comparing results across face sizes.
 - **Pumping power** = ΔP × Q, with ΔP measured across the plate taps minus the loop tare.
 - **Maximum power at OCP conditions** P_max = (85 − 45) / R, using a typical 85 °C accelerator limit.
@@ -21,17 +25,19 @@ Status: draft for Phase 1. Every number below needs a source or a reason; change
 |---|---|---|
 | Test vehicle face | 25.4 × 25.4 mm (6.45 cm²), copper C101 or C110 | Matches Hoang's finned area |
 | Face flatness | 0.05 mm or better | OCP OAI guidelines, test vehicle flatness |
-| Heat load | Up to 250 W (design); 150 W for resistance tests | 150 W follows Hoang; confirm in Phase 1 |
+| Heat load | Up to 250 W (design); 150 W for resistance tests | Hoang ran 150 W in several cases. The power behind their Fig. 10 is not given (asked of the authors) |
 | Heat flux at 250 W | About 39 W/cm² | 250 W / 6.45 cm² |
 | Coolant | Distilled water with copper and aluminum inhibitor, pH 8.0 to 10.5 | OCP coolant base specification v1.3 |
-| Inlet temperature | 45 ± 2 °C for OCP runs; Hoang's inlet temperature for each validation case | OCP test spec; Hoang et al. |
-| Thermal-resistance flows | 0.75, 1.0, 1.5, 2.0 L/min | Hoang's flows |
+| Inlet temperature | 45 ± 2 °C for OCP runs; 36 °C for the comparison with Hoang | OCP test spec; Hoang et al. Fig. 10 |
+| Thermal-resistance flows | 0.75, 1.0, 1.5, 2.0 L/min; 1.25 and 1.75 where time allows | Hoang's Fig. 10 has six flows in 0.25 L/min steps |
 | Rated flow | 1.5 L/min | Chosen so that 25 to 150% of rated spans Hoang's flows |
 | Pressure-drop flows | 0.375, 0.75, 1.0, 1.5, 2.0, 2.25 L/min | OCP: at least six flows from 25 to 150% of rated, including 100% |
 | Clamp pressure | Adjustable from about 15 to 50 psi; nominal above 40 psi (about 178 N) | OAI guidelines ask for more than 40 psi; the range serves RQ2 |
 | Thermal paste | Thermal Grizzly Kryonaut, about 0.1 g weighed per mount | Hoang's paste; a fixed mass keeps the bond line repeatable |
 | Steady state | Face temperature changing less than 0.05 °C per minute over 5 minutes | Chosen: the spec gives no criterion |
-| Reference plate | Hoang et al. 2022, 0.5 mm pin design, AlSi10Mg | Coarsest of their three designs, so most printable |
+| Reference plate | Hoang et al. 2022, 0.5 mm pin design (625 pins), AlSi10Mg, printed by PCBWay, two copies | Coarsest of their three designs, and the smallest pin PCBWay prints |
+| Reference plate as built | Pin diameters measured on arrival; CFD and the comparison use the measured size | PCBWay's normal tolerance puts a 0.5 mm pin between 0.3 and 0.7 mm ([`vendor_answers.md`](vendor_answers.md)) |
+| Plate base temperature | Two sensors in 0.76 × 0.76 mm grooves under the base | Hoang's R definition ([`hoang_reference.md`](hoang_reference.md)) |
 
 ## Choices the OCP spec leaves open
 
@@ -40,7 +46,7 @@ This table is the core of what OpenTTV documents. Draft: check it against the sp
 | Left open by the spec | OpenTTV choice | Why |
 |---|---|---|
 | Heat source | Copper meter-bar TTV with a 25.4 mm face and four 24 V cartridge heaters | Follows the Villanova standard test vehicle at lower power and cost |
-| Surface temperature | Linear extrapolation from four neck thermocouples 6.35 mm apart | Same spacing as the Villanova design; a groove thermocouple is an optional check |
+| Surface temperature | Linear extrapolation from four neck thermocouples 6.35 mm apart | Same spacing as the Villanova design. A groove thermocouple in the copper face is an optional check; the sensors under the plate base are required for the Hoang comparison |
 | Heat flow | Neck heat flow by Fourier's law, cross-checked with electrical power and the water energy balance | Electrical power overstates the heat reaching the plate by the insulation loss |
 | Power level | 150 W for resistance tests, up to 250 W | Matches the reference data; keeps thermocouple spread well above calibration error |
 | Thermal paste | Kryonaut, weighed per mount | Matches the reference data |
@@ -59,9 +65,9 @@ This table is the core of what OpenTTV documents. Draft: check it against the sp
 | FR5 | Measure pressure drop by the OCP method | Six-point sweep, tare subtracted, three repeats | Curve fit and coefficients reported as the spec asks | |
 | FR6 | Mount repeatably | Three remounts on the commissioning block and on the reference plate | R spread 5% or less | |
 | FR7 | Know the measurement uncertainty | Uncertainty budget | R uncertainty ±10% or better at 150 W and 1 L/min | |
-| FR8 | Reproduce the reference result (RQ1) | Thermal matrix at Hoang's flows, three remounts | Overlap with Hoang within combined uncertainty at each flow, or a tested explanation of the gap | |
+| FR8 | Reproduce the reference result (RQ1) | Thermal matrix at Hoang's flows and 36 °C inlet, three remounts, in Hoang's form of R | Overlap with Hoang's Fig. 10 within combined uncertainty at each flow, with the measured pin size taken into account, or a tested explanation of the gap | |
 | FR9 | CFD reproduces the reference before hardware | Fluent model with a mesh study | Within about 10% of Hoang on R and ΔP, or the gap explained | |
-| FR10 | Measure the effect of open choices (RQ2) | Clamp at 15, 30 and 45 psi; two pastes; optional groove thermocouple | Table of changes in R with three repeats per setting | |
+| FR10 | Measure the effect of open choices (RQ2) | Clamp at 15, 30 and 45 psi; two pastes; interface resistance from the plate-base sensors | Table of changes in R and in interface resistance, three repeats per setting | |
 | FR11 | Predict my own plate blind (RQ3) | Prediction committed to GitHub before the plate arrives | CFD error on R and ΔP reported; target 10% or better on R (Ozguc et al. 2025 reached 9.7%) | |
 | FR12 | Others can reproduce the rig | Someone else follows the build guide | They can assemble the TTV or the loop from the docs alone; fixes logged | |
 
@@ -72,9 +78,10 @@ This table is the core of what OpenTTV documents. Draft: check it against the sp
 | C1 | Heaters run on 24 V DC. Mains power only for the optional sous-vide stick, on a GFCI outlet |
 | C2 | Interlocks: heaters off if any neck reading passes 140 °C, if flow stops, or if the PC goes silent for 5 seconds; a bimetal cutoff on the heater base backs up the firmware |
 | C3 | Water velocity in the plate inlet stays under 1.5 m/s at the highest flow (OCP guidance); check by calculation |
-| C4 | Budget: $800 to $1,600 at list prices; lean target $400 to $600, hard goal $1,000 or less |
+| C4 | Budget: $800 to $1,350 at list prices; lean target $400 to $600, hard goal $1,000 or less |
 | C5 | CFD fits the available license (Ansys Student: about 1 million fluid cells, 128k structural nodes) or uses a Purdue license |
 | C6 | Only public information is used. Open licenses: MIT for code, CERN-OHL-P for hardware, CC BY 4.0 for data |
+| C7 | Printed plates keep pins at 0.5 mm or larger with gaps of 0.5 mm or more (PCBWay, SLM AlSi10Mg) |
 
 ## First-pass design numbers (check in Phase 2)
 
@@ -94,9 +101,12 @@ This table is the core of what OpenTTV documents. Draft: check it against the sp
 
 | Item | How it gets closed | By |
 |---|---|---|
-| What "pin pitch equal to diameter" means in Hoang et al. | Email to the Binghamton authors; meanwhile assume gap equals diameter | Oct 25 |
-| Clamp force, thermocouple depths and manifold internal shape in Hoang et al. | Same email | Oct 25 |
-| Hoang's test power and inlet temperature for each case | Reading the paper closely | Oct 18 |
-| Smallest reliable AlSi10Mg pin at commercial vendors | Test coupon sent to three vendors | Oct 25 |
-| CFD license route | Ask Purdue ECN about remote research licenses | Oct 25 |
-| Rated flow of 1.5 L/min | Confirm against the spec's definition of rated flow | Oct 25 |
+| What "pin pitch equal to diameter" means in Hoang et al. | Asked of the Binghamton authors on Nov 11; meanwhile assume gap equals diameter | Follow up Nov 24 |
+| Inlet slit size and the manifold's inside shape | Same email; their jet Reynolds number suggests a slit about 4 to 5 mm across | Follow up Nov 24; assume by mid-December |
+| Heater power behind Hoang's Fig. 10 | Same email; use 150 W meanwhile | Follow up Nov 24 |
+| Clamp force and thermocouple positions in Hoang et al. | Not in the first email; ask in the reply or on a call | With their reply |
+| Base flatness after printing, and who machines the two grooves | Asked PCBWay on Nov 11 | Before the Dec 6 order |
+| CFD license route | Purdue's teaching license does not cover published results; choose between a research license and a coarser mesh with its error measured | Before Phase 3 starts, Dec 7 |
+| Rated flow of 1.5 L/min | Confirm against the spec's definition of rated flow | When the requirements are locked |
+
+Closed: Hoang's test conditions (36 °C inlet and six flows for Fig. 10, in [`hoang_reference.md`](hoang_reference.md)); the smallest printable AlSi10Mg pin (0.5 mm at PCBWay, in [`vendor_answers.md`](vendor_answers.md)).
